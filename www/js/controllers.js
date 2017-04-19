@@ -1,9 +1,71 @@
 
+
 angular.module('starter.controllers', [])
 
 
-.controller('myCtrl', function($scope, $ionicActionSheet) {
+.controller('AppCtrl', function($scope, $http) {
 
+
+$scope.submit2 = function (mobile) {
+
+var datas = {
+'mobile': $scope.mobile,
+'userType': 'patient'
+};
+
+var req = {
+    method: 'POST',
+    url: 'http://vqtest.southeastasia.cloudapp.azure.com/VraiQueue/service/validateUser',
+    headers: {
+        'Content-Type': 'application/form-data'
+    },
+    params: datas
+};
+//
+$http(req).then(function (response) {
+    // success function
+     window.location.replace("#/tab/dash");
+     alert("success"+JSON.stringify(response));
+     $scope.msg = "Service Exists";
+$scope.statusval = response.status;
+$scope.statustext = response.data;
+$scope.headers = response.config;
+    //  console.error(JSON.stringify(response));
+}, function (response) {
+    // Failure Function
+     $scope.msg = "Service not Exists";
+$scope.statusval = response.status;
+$scope.statustext = response.data;
+$scope.headers = response.config;
+     alert(JSON.stringify(response));
+
+
+
+
+});
+
+};
+
+})
+
+.controller('loginCtrl', function($scope , sharedConn,$state ) {
+
+	var XMPP_DOMAIN  = 'jabberpl.org'; // Domain we are going to be connected to.
+
+	$scope.goToRegister=function(){
+		$state.go('register', {}, {location: "replace", reload: true});
+	}
+
+
+	//sharedConn.login(xmpp_user,XMPP_DOMAIN,xmpp_pass);  // To automate login
+
+	$scope.login=function(user){
+		sharedConn.login(user.jid,XMPP_DOMAIN,user.pass);
+	}
+
+})
+
+.controller('myCtrl', function($scope, $ionicActionSheet) {
 
 
 // show action sheet in js
@@ -15,25 +77,25 @@ angular.module('starter.controllers', [])
             { text: 'Edit 1' },
             { text: 'Edit 2' }
          ],
-			
+
          destructiveText: 'Delete',
          titleText: 'Action Sheet',
          cancelText: 'Cancel',
-			
+
          cancel: function() {
             // add cancel code...
          },
-			
+
          buttonClicked: function(index) {
             if(index === 0) {
                // add edit 1 code
             }
-				
+
             if(index === 1) {
                // add edit 2 code
             }
          },
-			
+
          destructiveButtonClicked: function() {
             // add delete code..
          }
@@ -47,9 +109,9 @@ angular.module('starter.controllers', [])
    $scope.showLoading = function() {
       $ionicLoading.show({
          template: 'Loading...'
-         
+
       });
-      
+
    };
 
    $scope.hideLoading = function(){
@@ -63,7 +125,7 @@ angular.module('starter.controllers', [])
 
    $scope.showBackdrop = function() {
       $ionicBackdrop.retain();
-		
+
       $timeout(function() {
          $ionicBackdrop.release();
       }, 3000);

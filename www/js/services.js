@@ -1,5 +1,24 @@
 angular.module('starter.services', [])
 
+
+.factory('connect',['$http',function($http){
+
+var data = {
+'mobile': '9567969610',
+'userType': 'patient'
+};
+
+return $http.post('http://vqtest.southeastasia.cloudapp.azure.com/VraiQueue/service/validateUser', data)
+.success(function (data) { 
+    alert("success");
+    return data; 
+}).error(function (err) { 
+    alert("error");
+    return err; 
+});
+
+}])
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

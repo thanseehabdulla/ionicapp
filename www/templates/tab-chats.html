@@ -1,16 +1,24 @@
 <ion-view view-title="Chats">
   <ion-content>
-    <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
+    
+<div ng-controller="AppCtrl">
+<form>
 
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+<center>
+
+<div class="list list-inset" style="margin-top: 200px">
+          <label class="item item-input">
+              <input type="text" placeholder="Mobile" ng-model="mobile">
+          </label>
+        
+      </div>
+      <button class="button button-block button-positive" ng-model="mobile"  ng-click="submit2(mobile)">GET OTP</button>
+<p>Output Message : {{msg}}</p>
+<p>StatusCode: {{statusval}}</p>
+<p>Status: {{statustext}}</p>
+<p>Response Headers: {{headers}}</p>
+</center>
+</form>
+</div>
+ </ion-content>
 </ion-view>
